@@ -12,12 +12,12 @@ async function searchRepo() {
   const searchValue = input.value;
 
   if (searchValue) {
-    clearSearch();
 
     await fetch(
       `https://api.github.com/search/repositories?q=${searchValue}&per_page=5`
     ).then((response) => {
       if (response.ok) {
+        clearSearch();
         response.json().then((responce) => {
           responce.items.forEach((repo) => {
             createSearchItem(repo);

@@ -63,7 +63,7 @@ function createSearchItem(repoInfo) {
   item.addEventListener("click", () => {
     createInfoBlock(item);
     clearSearch();
-    input.value = "";
+    input.value = " ";
   });
 }
 
@@ -75,9 +75,7 @@ function createInfoBlock(item) {
 
   choosedItem.innerHTML = `<span>Name: ${item.dataset.name}</span><span>Owner: ${item.dataset.owner}</span><span>Stars: ${item.dataset.stars}`;
 
-  const choosed = document.getElementById("choosed");
-
-  choosed.append(choosedItem);
+  choosedList.append(choosedItem);
   choosedItem.append(button);
 
   button.addEventListener("click", () => {

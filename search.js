@@ -63,7 +63,7 @@ function createSearchItem(repoInfo) {
   item.addEventListener("click", () => {
     createInfoBlock(item);
     clearSearch();
-    input.value = " ";
+    input.value = "";
   });
 }
 

@@ -1,6 +1,10 @@
 body{
   background: #644bf6;
 }
+ul{
+  margin: 0;
+  padding: 0;
+}
 .search{
   max-width: 450px;
   margin: 150px auto;

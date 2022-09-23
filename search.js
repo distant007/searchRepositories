@@ -11,6 +11,7 @@ input.addEventListener("input", debounce(getData, 300));
 async function getData() {
   const searchValue = input.value;
   if (searchValue) {
+<<<<<<< HEAD
     const data = await fetch(
       `https://api.github.com/search/repositories?q=${searchValue}&per_page=5`
     );

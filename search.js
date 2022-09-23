@@ -6,28 +6,25 @@ const choosedList = document.querySelector(".choosed-list");
 
 const input = document.querySelector("input");
 
-input.oninput = debounce(searchRepo, 200);
+input.addEventListener("input", debounce(getData, 300));
 
-async function searchRepo() {
+async function getData() {
   const searchValue = input.value;
-
   if (searchValue) {
-    clearSearch();
-
-    await fetch(
+    const data = await fetch(
       `https://api.github.com/search/repositories?q=${searchValue}&per_page=5`
-    ).then((response) => {
-      if (response.ok) {
-        response.json().then((responce) => {
-          responce.items.forEach((repo) => {
-            createSearchItem(repo);
-          });
-        });
-      }
-    });
+    );
+    const result = await data.json();
+    renderData(result);
   } else {
     clearSearch();
   }
+}
+function renderData(result) {
+  clearSearch();
+  const arr = [];
+  arr.push(...result.items);
+  arr.forEach((item) => createSearchItem(item));
 }
 
 function clearSearch() {
@@ -44,19 +41,17 @@ function debounce(fn, debounceTime) {
   };
 }
 
-function createElement(elementTag, elementClass) {
+function createElement(elementTag) {
   const element = document.createElement(elementTag);
-  if (elementClass) element.classList.add(elementClass);
   return element;
 }
 function createSearchItem(repoInfo) {
-  const item = createElement("li", "item");
+  const item = createElement("li");
   item.textContent = `${repoInfo.name}`;
 
   autocomplitBox.append(item);
 
   item.dataset.name = `${repoInfo.name}`;
-  item.dataset.owner = `${repoInfo.owner.login}`;
   item.dataset.owner = `${repoInfo.owner.login}`;
   item.dataset.stars = `${repoInfo.stargazers_count}`;
 
@@ -75,9 +70,7 @@ function createInfoBlock(item) {
 
   choosedItem.innerHTML = `<span>Name: ${item.dataset.name}</span><span>Owner: ${item.dataset.owner}</span><span>Stars: ${item.dataset.stars}`;
 
-  const choosed = document.getElementById("choosed");
-
-  choosed.append(choosedItem);
+  choosedList.append(choosedItem);
   choosedItem.append(button);
 
   button.addEventListener("click", () => {

@@ -11,27 +11,11 @@ input.addEventListener("input", debounce(getData, 300));
 async function getData() {
   const searchValue = input.value;
   if (searchValue) {
-<<<<<<< HEAD
     const data = await fetch(
       `https://api.github.com/search/repositories?q=${searchValue}&per_page=5`
     );
     const result = await data.json();
     renderData(result);
-=======
-
-    await fetch(
-      `https://api.github.com/search/repositories?q=${searchValue}&per_page=5`
-    ).then((response) => {
-      if (response.ok) {
-        clearSearch();
-        response.json().then((responce) => {
-          responce.items.forEach((repo) => {
-            createSearchItem(repo);
-          });
-        });
-      }
-    });
->>>>>>> 59be7553e9d5757eaa800b0d0e14c112ef55df65
   } else {
     clearSearch();
   }
